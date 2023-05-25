@@ -1,0 +1,59 @@
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Main.java to edit this template
+ */
+package pruebas_ficheros;
+
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.util.ArrayList;
+
+/**
+ *
+ * @author alumno
+ */
+public class Fichero_Caracteres {
+
+    /**
+     * @param args the command line arguments
+     */
+    public static void main(String[] args) {
+
+        //Me dan un fichero de caracteres y a traves del fichero debo crear un archivo con palabras. 10 palabras por linea.
+        String caracter;
+        String cadena = "";
+        int i;
+        ArrayList<String> palabras = new ArrayList();
+        byte[] palabra_byte;
+        try {
+            FileInputStream in = new FileInputStream("in.bin");
+            while ((i = in.read()) != -1) {
+                caracter = Character.toString(((char) i));
+                if (caracter.equalsIgnoreCase(" ")) {
+                    palabras.add(cadena);
+                    cadena = "";
+                } else {
+                    cadena = cadena.concat(caracter);
+                }
+            }
+            palabras.add(cadena);
+            FileOutputStream out = new FileOutputStream("out.bin");
+            for (String palabra : palabras) {
+                palabra_byte = palabra.getBytes();
+                for (byte letra : palabra_byte) {
+                    out.write((byte) letra);
+                }
+                out.write((byte) '\n');
+            }
+            in.close();
+            out.close();
+        } catch (IOException ioe) {
+            System.out.println(ioe);
+        }
+        
+        
+
+    }
+
+}
